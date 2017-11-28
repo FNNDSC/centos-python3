@@ -22,14 +22,9 @@ on most platforms."
 
 RUN yum install -y centos-release-scl-rh && \
     yum-config-manager --enable centos-sclo-rh-testing && \
-    INSTALL_PKGS="rh-python36 rh-python36-python-devel rh-python36-python-setuptools rh-python36-python-pip \
-	 nss_wrapper httpd24 httpd24-httpd-devel httpd24-mod_ssl httpd24-mod_auth_kerb httpd24-mod_ldap \
-         httpd24-mod_session atlas-devel gcc-gfortran libffi-devel libtool-ltdl enchant" && \
+    INSTALL_PKGS="rh-python36 rh-python36-python-pip" &&\
     yum install -y --setopt=tsflags=nodocs --enablerepo=centosplus $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    # Remove centos-logos (httpd dependency, ~20MB of graphics) to keep image
-    # size smaller.
-    rpm -e --nodeps centos-logos && \
     yum clean all -y
 
 # - Create a Python virtual environment for use by any application to avoid
@@ -46,4 +41,3 @@ RUN source scl_source enable rh-python36 && \
     rpm-file-permissions
 
 ENTRYPOINT ["python3"]
-
